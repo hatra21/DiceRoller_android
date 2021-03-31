@@ -7,70 +7,72 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity {
 
-
-    private Button zeroButton;
-    private Button oneButton;
-    private Button twoButton;
-    private Button threeButton;
-    private Button fourButton;
-    private Button fiveButton;
-    private Button sixButton;
-    private Button sevenButton;
-    private Button eightButton;
-    private Button nineButton;
     private TextView qtyTv;
+    private TextView selectdDieTV;
+    private String currentQtyText;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        this.oneButton = this.findViewById(R.id.button1);
         this.qtyTv = this.findViewById(R.id.qtyTV);
+        this.selectdDieTV = this.findViewById(R.id.selectedDieTV);
+        this.qtyTv.setText("");
+        this.currentQtyText = "";
+    }
+
+    private String extractNumberOfSides(String diceType) {
+        String answer = "";
+        for (int i=1; i<diceType.length(); i++) {
+            answer += diceType.charAt(i);
+        }
+        return answer;
+    }
+
+    public void onRollButtonPressed(View v) {
+        //get the qty as an int
+        String qtyString = this.qtyTv.getText().toString();
+        int qtyInt = Integer.parseInt(qtyString);
+        int[] theRolls = new int[qtyInt];
+
+        //get the number of sides as an int
+        String fullDiceString = this.selectdDieTV.getText().toString(); //like "D4" or "D6"
+        String trimmedDiceString = this.extractNumberOfSides(fullDiceString);
+
+        //String trimmerDiceString = fullDiceString.substring(1);
+        int NumberOfSidesInt = Integer.parseInt(trimmedDiceString);
+        Random r= new Random();
+
+
+    }
+
+    public void diceButtonPressed(View v) {
+        this.selectdDieTV.setText(v.getTag().toString());
+
+    }
+
+    public void clearButtonPressed(View v) {
+        this.currentQtyText = "";
+        this.qtyTv.setText(this.currentQtyText);
+
     }
 
 
     public void qtyButtonPressed(View v) {
-        if (v == this.oneButton) {
-            this.qtyTv.setText("1");
+        Button b = (Button)v;
+        if (this.currentQtyText.length() == 0 && this.currentQtyText.equals(0)) {
+            return;
         }
-        if (v == this.twoButton) {
-            this.qtyTv.setText("2");
-        }
+        this.currentQtyText += b.getText();
+        this.qtyTv.setText(this.currentQtyText);
 
-        if (v == this.threeButton) {
-            this.qtyTv.setText("3");
-        }
 
-        if (v == this.fourButton) {
-            this.qtyTv.setText("4");
-        }
-
-        if (v == this.fiveButton) {
-            this.qtyTv.setText("5");
-        }
-
-        if (v == this.sixButton) {
-            this.qtyTv.setText("6");
-        }
-
-        if (v == this.sevenButton) {
-            this.qtyTv.setText("7");
-        }
-
-        if (v == this.eightButton) {
-            this.qtyTv.setText("8");
-        }
-
-        if (v == this.nineButton) {
-            this.qtyTv.setText("9");
-        }
-
-        if (v == this.zeroButton) {
-            this.qtyTv.setText("0");
-        }
 
 
     }
