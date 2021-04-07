@@ -14,6 +14,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView qtyTv;
     private TextView selectdDieTV;
     private String currentQtyText;
+    private TextView rollsTV;
+    private TextView totalTV;
 
 
 
@@ -23,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         this.qtyTv = this.findViewById(R.id.qtyTV);
         this.selectdDieTV = this.findViewById(R.id.selectedDieTV);
+        this.rollsTV = this.findViewById(R.id.rollsTV);
+        this.totalTV = this.findViewById(R.id.totalTV);
         this.qtyTv.setText("");
         this.currentQtyText = "";
     }
@@ -44,10 +48,25 @@ public class MainActivity extends AppCompatActivity {
         //get the number of sides as an int
         String fullDiceString = this.selectdDieTV.getText().toString(); //like "D4" or "D6"
         String trimmedDiceString = this.extractNumberOfSides(fullDiceString);
-
         //String trimmerDiceString = fullDiceString.substring(1);
-        int NumberOfSidesInt = Integer.parseInt(trimmedDiceString);
+        int numberOfSidesInt = Integer.parseInt(trimmedDiceString);
         Random r= new Random();
+
+        int total = 0;
+        String individualRolls = "";
+        for (int i=0; i < theRolls.length; i++) {
+            theRolls[i] = r.nextInt(numberOfSidesInt) +1;
+            total += theRolls[i];
+
+            if (individualRolls.length() == 0) {
+                individualRolls = "" + theRolls[i];
+            } else {
+                individualRolls += " + " + theRolls[i];
+            }
+        }
+
+        this.rollsTV.setText(individualRolls);
+        this.totalTV.setText("" + total);
 
 
     }

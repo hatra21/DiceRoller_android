@@ -14,7 +14,7 @@
         android:text=" 2 + 5 + 4 + 2" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/totalTV"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -257,6 +257,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="onRollButtonPressed"
             android:text="ROLL" />
 
         <Button
