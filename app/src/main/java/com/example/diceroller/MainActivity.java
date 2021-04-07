@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Random;
 
@@ -29,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
         this.totalTV = this.findViewById(R.id.totalTV);
         this.qtyTv.setText("");
         this.currentQtyText = "";
+        this.rollsTV.setText("");
+        this.totalTV.setText("");
+        this.selectdDieTV.setText("");
     }
 
     private String extractNumberOfSides(String diceType) {
@@ -40,13 +44,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onRollButtonPressed(View v) {
-        //get the qty as an int
         String qtyString = this.qtyTv.getText().toString();
+        String fullDiceString = this.selectdDieTV.getText().toString(); //like "D4" or "D6"
+        String errorMsg = "";
+
+        if (qtyString.length() == 0) {
+            errorMsg = "You must enter a quantity before rolling!";
+        } else if (fullDiceString.length() == 0) {
+            errorMsg = "You must select a Dice before rolling!";
+        }
+
+        if (errorMsg.length() > 0) {
+            Toast t = Toast.makeText(this, errorMsg, Toast.LENGTH_LONG);
+            t.show();
+            return; //immediately end this method, don't try to do any rolling
+        }
+
+        //get the qty as an int
         int qtyInt = Integer.parseInt(qtyString);
         int[] theRolls = new int[qtyInt];
 
         //get the number of sides as an int
-        String fullDiceString = this.selectdDieTV.getText().toString(); //like "D4" or "D6"
+
         String trimmedDiceString = this.extractNumberOfSides(fullDiceString);
         //String trimmerDiceString = fullDiceString.substring(1);
         int numberOfSidesInt = Integer.parseInt(trimmedDiceString);
